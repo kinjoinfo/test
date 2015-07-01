@@ -5,7 +5,7 @@
  * @version   2015/02/19 -
  * @author    -
  * @since     2015/02/19
- * @copyright (C)2015 CROOZ All Rights Reserved
+ * @copyright (C)2015 All Rights Reserved
  */
 class AppWebController extends CroozController {
 	/**

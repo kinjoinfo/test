@@ -5,6 +5,6 @@
  * @version   2013/08/02 -
  * @author    -
  * @since     2013/08/02
- * @copyright (C)2013 CROOZ All Rights Reserved
+ * @copyright (C)2013 All Rights Reserved
  */
 $venus_route=array();
