@@ -1,3 +1,45 @@
-hello
-master
-develop
+GitHubにSSH接続できるようにする方法
+1.	SSH認証の公開鍵と秘密鍵を作成
+2.	クライアント側(Mac側か、CentOSか)へのSSHキーの設定
+3.	GitHubへの公開鍵の登録
+4.	ローカルリポジトリの設定を変更する
+5.	テスト方法
+
+1. SSH認証の公開鍵と秘密鍵を作成
+$ cd ~/.ssh
+$ ssh-keygen -t rsa -C rkinjo@crooz.co.jp
+これによって鍵ができます
+id_rsa : 秘密鍵
+id_rsa.pub : 公開鍵
+秘密鍵のパーミッションを強化する
+$ chmod 600 id_rsa
+
+2.クライアント側(Mac側か、CentOSか)へのSSHキーの設定
+鍵の管理を簡単にするために、~/.ssh/configに設定を追加します
+$ vim ~/.ssh/config
+末尾に以下を追加します
+Host github
+  HostName github.com
+  IdentityFile ~/.ssh/id_rsa
+  User git
+
+3. GitHubへの公開鍵の登録
+GitHubにブラウザでアクセス。左側メニューのSSH Keys → Add key を選択します。
+Title: id_rsa.github.com.pub
+Key: 上記id_rsa.pubの中身を貼り付け
+最後にこれを実行して、確認します。
+$ ssh -T git@github.com
+
+4. ローカルリポジトリの設定を変更する
+リポジトリの設定ファイルを開き、URLの項目をgit@...からはじまるSSH接続方式に変更します。
+設定方法：
+git remote set-url origin git@github.com:kinjoinfo/test.git
+設定結果は以下参照。
+mysite/.git/config
+×(NG) url = https://github.com/{アカウント名}/{リポジトリ名}.git
+◯(OK) url = git@github.com:{アカウント名}/{リポジトリ名}.git
+※SSH接続のURLはGitHubのサイト上のリポジトリのページの右下からも確認できます。
+
+５．テスト方法：
+[root@localvenus4 master]# git push origin
+Everything up-to-date
